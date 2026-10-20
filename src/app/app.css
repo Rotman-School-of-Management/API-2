@@ -1,0 +1,31 @@
+.tabs-header {
+  display: flex;
+  justify-content: center; /* Centers the button horizontally */
+  align-items: center;     /* Centers the button vertically (if container has height) */
+  width: 100%;
+}
+
+.tabs-header button {
+  padding: 24px 24px;      /* Increases button size (top/bottom and left/right padding) */
+  font-size: 25px;         /* Enlarges text inside the button */
+  /* Optional: transform: scale(1.2); to make it bigger */
+    background-color: #007bff; /* Button background color */
+    color: #ffffff;            /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.tabs-header button:hover {
+  background-color: #0056b3; /* Hover color */
+}
+
+/* Active state color */
+.tabs-header button.active {
+  background-color: #007bff; /* Vibrant active color (e.g., Bootstrap Blue) */
+  color: #ffffff;            /* White text for contrast */
+  font-weight: bold;
+  font-size: 28px;
+}

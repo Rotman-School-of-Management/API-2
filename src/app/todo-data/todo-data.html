@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDos</title>
+      <link rel="stylesheet" href="todo-data.css">
+</head>
+<body>
+
+<h2 style="text-align: center;"> Todo List</h2>
+
+<div *ngIf="loading">Loading todos...</div>
+<div *ngIf="error" style="color: red;">{{ error }}</div>
+
+<div id="todo-grid" class="todo-grid" *ngIf="!loading && !error">
+  <div *ngFor="let todo of todos">
+    <strong>{{ todo.todoId }}</strong> ({{ todo.title }}) — City: {{ todo.completed }}
+  </div>
+</div>
+
+
+</body>
+</html>
+

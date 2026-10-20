@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+      <link rel="stylesheet" href="user-data.css">
+
+    <style>
+.large-input {
+  width: 100%;        /* Makes the box span the full container width */
+  max-width: 1000px;   /* Or set a fixed width like 400px */
+  height: 40px;       /* Increases the vertical height */
+  font-size: 18px;    /* Enlarges text inside the box for proportion */
+  padding: 5px 5px 0px 50px; /* Adds internal spacing */
+  margin-bottom:50px;
+}
+      </style>
+
+
+
+</head>
+<body>
+
+<h2 style="text-align: center;"> User Data</h2>
+
+<div *ngIf="loading">Loading users...</div>
+<div *ngIf="error" style="color: red;">{{ error }}</div>
+
+<div id="user-grid" class="user-grid">
+<input
+  type="text" class="large-input"
+  [(ngModel)]="searchTerm"
+  (input)="filterUsers()"
+  placeholder="Filter by name or email..."/>
+
+</div>
+
+<div id="user-grid" class="user-grid" *ngIf="!loading && !error">
+  <div *ngFor="let user of filteredUsers">
+    <strong>{{ user.name }}</strong> <br>({{ user.email }}) <br> City: {{ user.address.city }}
+  </div>
+</div>
+
+
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos</title>
+      <link rel="stylesheet" href="photo-data.css">
+
+
+</head>
+<body>
+
+<h2 style="text-align: center;"> Photo Data</h2>
+
+<div *ngIf="loading">Loading photos...</div>
+<div *ngIf="error" style="color: red;">{{ error }}</div>
+
+<div class="thumbnail-container">
+  <div *ngFor="let photo of photos" class="thumbnail-card">
+    <img [src]="photo.thumbnailUrl" [alt]="photo.title" class="thumb-img" />
+    <p class="thumb-title">{{ photo.title }}</p>
+  </div>
+</div>
+
+
+</body>
+</html>
+
