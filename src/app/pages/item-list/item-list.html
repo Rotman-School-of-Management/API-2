@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="header-actions">
+    <h2>Inventory Registry</h2>
+    <a routerLink="/pages/addnew" class="btn btn-primary">+ Add New Item</a>
+  </div>
+
+  <table class="item-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td><strong>{{ item.name }}</strong></td>
+        <td>{{ item.description }}</td>
+        <td>${{ item.price | number:'1.2-2' }}</td>
+        <td>
+          <a [routerLink]="['/pages/edit', item.id]" class="btn-action edit">Edit</a>
+          <a [routerLink]="['/pages/remove', item.id]" class="btn-action delete">Remove</a>
+        </td>
+      </tr>
+      <tr *ngIf="items.length === 0">
+        <td colspan="4" style="text-align: center; padding: 20px;">No items found.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

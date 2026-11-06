@@ -1,0 +1,36 @@
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .item-table th, .item-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .item-table th {
+    background-color: #f3f4f6;
+  }
+
+.btn-action {
+  text-decoration: none;
+  margin-right: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+  .btn-action.edit {
+    color: var(--primary);
+  }
+
+  .btn-action.delete {
+    color: var(--danger);
+  }
