@@ -1,0 +1,7 @@
+/* In your-component.component.css */
+.custom-slim-btn {
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+  font-size: 0.8rem;
+  line-height: 1.2;
+}

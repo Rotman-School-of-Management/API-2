@@ -1,41 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {  Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
+import { CommonModule,NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ItemService } from '../../services/item.service';
+import { Product, ProductService } from '../../services/product';
 import { Item } from '../../models/item.model';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, FormsModule, NgFor, NgIf],
   selector: 'app-edit',
   styleUrl: './edit.css',
   templateUrl: './edit.html',
 })
 export class Edit implements OnInit {
-  item!: Item;
+  products: Product[] = [];
+ // etc1: boolean | null = null; 
+   public totalCount: number = 0; // To hold the count of filtered events
+
+  
+  // Track form state
+  currentProduct: Product = { id: 0, uxnameF: '', uxname: '', uxemail: '',etc1: '',etc2: '',};
+  isEditMode = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private itemService: ItemService
-  ) { }
+    private productService: ProductService, 
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      const found = this.itemService.getItemById(id);
-      if (found) {
-        this.item = { ...found }; // Clone object so changes aren't applied unless saved
-      } else {
-        this.router.navigate(['/']);
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.cdr.markForCheck(); 
+         this.totalCount =  this.products.length;
       }
+    });
+  }
+
+  saveProduct(): void {
+    if (this.isEditMode) {
+      // EDIT MODE
+      this.productService.updateProduct(this.currentProduct.id, this.currentProduct).subscribe({
+        next: () => {
+          this.loadProducts(); // Refresh list
+          this.resetForm();
+            this.cdr.detectChanges();
+        }
+      });
+    } else {
+      // ADD MODE
+      this.productService.addProduct(this.currentProduct).subscribe({
+        next: () => {
+          this.loadProducts(); // Refresh list
+          this.resetForm();
+            this.cdr.detectChanges();
+        }
+      });
     }
   }
 
-  onUpdate(): void {
-    if (this.item.name.trim()) {
-      this.itemService.updateItem(this.item);
-      this.router.navigate(['/']);
+  editProduct(product: Product): void {
+    this.isEditMode = true;
+    this.currentProduct = { ...product }; // Shallow copy to avoid live-binding in form
+    this.cdr.markForCheck();
+      this.cdr.detectChanges();
+  }
+
+  deleteProduct(id: number): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(id).subscribe({
+        next: () => {
+          this.loadProducts(); // Refresh list
+            this.cdr.detectChanges();
+        }
+      });
     }
+  }
+
+  resetForm(): void {
+    this.isEditMode = false;
+    this.currentProduct = { id: 0, uxnameF: '', uxname: '', uxemail: '',etc1: '',etc2: '',};
+    this.cdr.markForCheck();
+      this.cdr.detectChanges();
   }
 }

@@ -1,27 +1,91 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {  Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
+import { CommonModule,NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ItemService } from '../../services/item.service';
+import { Product, ProductService } from '../../services/product';
 import { Item } from '../../models/item.model';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 @Component({
   selector: 'app-addnew',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule,FormsModule, NgFor, NgIf],
   styleUrl: './addnew.css',
   templateUrl: './addnew.html',
 })
-export class Addnew {
+export class Addnew implements OnInit {
+  products: Product[] = [];
+ // etc1: boolean | null = null; 
+   public totalCount: number = 0; // To hold the count of filtered events
 
-  newItem: Item = { id: '', name: '', description: '', price: 0 };
+  
+  // Track form state
+  currentProduct: Product = { id: 0, uxnameF: '', uxname: '', uxemail: '',etc1: '',etc2: '',};
+  isEditMode = false;
 
-  constructor(private itemService: ItemService, private router: Router) { }
+  constructor(
+    private productService: ProductService, 
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  onSubmit(): void {
-    if (this.newItem.name.trim()) {
-      this.itemService.addItem(this.newItem);
-      this.router.navigate(['/']);
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.cdr.markForCheck(); 
+         this.totalCount =  this.products.length;
+      }
+    });
+  }
+
+  saveProduct(): void {
+    if (this.isEditMode) {
+      // EDIT MODE
+      this.productService.updateProduct(this.currentProduct.id, this.currentProduct).subscribe({
+        next: () => {
+          this.loadProducts(); // Refresh list
+          this.resetForm();
+            this.cdr.detectChanges();
+        }
+      });
+    } else {
+      // ADD MODE
+      this.productService.addProduct(this.currentProduct).subscribe({
+        next: () => {
+          this.loadProducts(); // Refresh list
+          this.resetForm();
+            this.cdr.detectChanges();
+        }
+      });
     }
+  }
+
+  editProduct(product: Product): void {
+    this.isEditMode = true;
+    this.currentProduct = { ...product }; // Shallow copy to avoid live-binding in form
+    this.cdr.markForCheck();
+      this.cdr.detectChanges();
+  }
+
+  deleteProduct(id: number): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(id).subscribe({
+        next: () => {
+          this.loadProducts(); // Refresh list
+            this.cdr.detectChanges();
+        }
+      });
+    }
+  }
+
+  resetForm(): void {
+    this.isEditMode = false;
+    this.currentProduct = { id: 0, uxnameF: '', uxname: '', uxemail: '',etc1: '',etc2: '',};
+    this.cdr.markForCheck();
+      this.cdr.detectChanges();
   }
 }

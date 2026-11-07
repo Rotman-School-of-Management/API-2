@@ -1,32 +1,272 @@
-<div class="container">
-  <div class="header-actions">
-    <h2>Inventory Registry</h2>
-    <a routerLink="/pages/addnew" class="btn btn-primary">+ Add New Item</a>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+
+<style>
+table {
+border-collapse: collapse; width: 80%;
+margin-left: auto;
+margin-right: auto;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Color for even rows */
+}
+
+table tr:nth-child(odd) {
+  background-color: #ffffff; /* Color for odd rows */
+}
+
+.count {
+    background-color: #3498db;
+    width: 200px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    color: white;
+    border-radius: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 30px; /* Adjust font size to your liking */
+    font-weight: bold;
+  }
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  margin: 16px 0;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table th {
+  background-color: #f4f4f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.custom-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+
+.json-viewer {
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  padding: 16px;
+  border-radius: 6px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.input-form {
+  display: flex;
+  gap: 16px; /* Space between input columns */
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column; /* Stacks label above the input */
+   flex: 1 1 calc(33.333% - 1rem); /* 3 per line minus gap */
+}
+.button-group,
+.btn-group {
+  clear: both;
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+
+}
+.button-group .btn {
+  height: 50%;
+}
+.input-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input-group input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+  width: 100%;
+}
+/* Target the dropdown using a class selector */
+    .custom-dropdown {
+      width: 100px;
+      padding: 8px;
+      font-size: 16px;
+      background-color: #fff;
+
+      /* Style the box border */
+      border: 2px solid #0076ff; /* width, style, color */
+      border-radius: 6px;        /* rounds the corners */
+    }
+
+    /* Style the border when a user clicks/focuses on it */
+    .custom-dropdown:focus {
+      outline: none; /* removes the default browser blue outline */
+      border-color: #004baf; /* changes border color on focus */
+    }
+.switch-container {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.switch-container input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+
+</style>
+
+
+<div style="padding: 20px;">
+  <h3>{{ isEditMode ? 'Edit Subsciber' : 'Add Subscriber' }}</h3>
+  <div style="width: 100%; margin: 0 auto;">
+  <form (ngSubmit)="saveProduct()"  class="input-form">
+    <div class="input-group">
+    <label for="input1">First Name</label>
+   <input [(ngModel)]="currentProduct.uxnameF" name="uxnameF" placeholder="First Name" required />
+    </div>
+
+  <div class="input-group">
+   <label for="input2">Last Name</label>
+   <input [(ngModel)]="currentProduct.uxname" name="uxname" placeholder="Last Name" required />
+    </div>
+
+  <div class="input-group">
+  <label for="input3"> Email</label>
+   <input [(ngModel)]="currentProduct.uxemail" name="uxemail" placeholder="Email" required />
   </div>
 
-  <table class="item-table">
+  <div class="input-group">
+    <label for="input4"> Event Update</label>
+
+ <label class="switch-container">
+    <input
+      type="checkbox"
+      name="etc1"
+      [checked]="currentProduct.etc1 === 'Y'"
+      (change)="currentProduct.etc1 = $event.target.checked ? 'Y' : 'N'">
+    <span class="slider round"></span>
+
+</label>
+    <span class="label-text">{{ currentProduct.etc1 === 'Y' ? 'YES' : 'NO' }}</span>
+
+
+  </div>
+
+  <div class="input-group">
+    <label for="input5"> Magazine Update</label>
+
+
+  <label class="switch-container">
+    <input
+      type="checkbox"
+      name="etc2"
+      [checked]="currentProduct.etc2 === 'Y'"
+      (change)="currentProduct.etc2 = $event.target.checked ? 'Y' : 'N'">
+    <span class="slider round"></span>
+
+</label>
+   <span class="label-text">{{ currentProduct.etc2 === 'Y' ? 'YES' : 'NO' }}</span>
+
+
+  </div>
+   <!-- This will drop to the next line -->
+  <div class="button-group">
+    <button type="submit" class="btn btn-primary me-2 btn-sm"  >{{ isEditMode ? 'Update' : 'Save' }}</button>
+    <button type="button" *ngIf="isEditMode" (click)="resetForm()" class="btn btn-primary me-2 btn-sm" >Cancel</button>
+    </div>
+  </form>
+</div>
+  <hr>
+
+  <h3>MS Sql Data of Insights Hub Subscribers </h3>
+    <h4>(Angular Frontend and .Net Api Backend) </h4>
+
+
+  <div class="count">
+    <span style="font-size:16px;"> Subscriber count:</span>   {{ totalCount }}
+</div>
+
+
+  <table border="1" cellpadding="6" >
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
+        <th>Fist Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Update1</th>
+        <th>Update2</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of items">
-        <td><strong>{{ item.name }}</strong></td>
-        <td>{{ item.description }}</td>
-        <td>${{ item.price | number:'1.2-2' }}</td>
+      <tr *ngFor="let product of products">
+	          <td>{{ product.uxnameF }}</td>
+	           <td>{{ product.uxname }}</td>
+	           <td>{{ product.uxemail }}</td>
+	           <td>{{ product.etc1 }}</td>
+               <td>{{ product.etc2 }}</td>
         <td>
-          <a [routerLink]="['/pages/edit', item.id]" class="btn-action edit">Edit</a>
-          <a [routerLink]="['/pages/remove', item.id]" class="btn-action delete">Remove</a>
+          <button (click)="editProduct(product)" class="btn btn-primary me-2" style="--bs-btn-padding-y: .15rem; --bs-btn-font-size: .75rem;">Edit</button>
+          <button (click)="deleteProduct(product.id)" class="btn btn-primary" style="--bs-btn-padding-y: .15rem; --bs-btn-font-size: .75rem;">Delete</button>
         </td>
-      </tr>
-      <tr *ngIf="items.length === 0">
-        <td colspan="4" style="text-align: center; padding: 20px;">No items found.</td>
       </tr>
     </tbody>
   </table>
 </div>
 
+
+
+  <!-- SECTION 2: Raw JSON View
+  <h3>2. Raw JSON Output</h3>
+  <pre class="json-viewer">
+    {{ products | json }}
+  </pre>-->
