@@ -13,7 +13,8 @@ public class Faculty
     public string FacultyID { get; set; } = "";
     public string? FName { get; set; } = "";
     public string? LName { get; set; } = "";
+    public string? Position { get; set; } = "";
     public string? Division { get; set; } = "";
-    
+
     public List<Publication> Publications { get; set; } = new();
 }

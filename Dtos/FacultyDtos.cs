@@ -15,6 +15,7 @@ public class FacultyDto
     public string FacultyID { get; set; } = "";
     public string? FName { get; set; } = "";
     public string? LName { get; set; } = "";
+    public string? Position { get; set; } = "";
     public string? Division { get; set; } = "";
 
     [XmlArray("Publications")]
@@ -26,6 +27,7 @@ public class PublicationDto
 {
     public int PublicationsID { get; set; }
     public string? Title { get; set; } = "";
+    public string? PublicationType { get; set; } = "";
     public string? Publisher { get; set; } = "";
     public int? YearPublished { get; set; }
 }
@@ -36,6 +38,7 @@ public class FacultyUpdateDto
 {
   public string? FName { get; set; }
   public string? LName { get; set; }
+  public string? Position { get; set; }
   public string? Division { get; set; }
 }
 
@@ -43,6 +46,7 @@ public class FacultyUpdateDto
 public class PublicationUpdateDto
 {
   public string? Title { get; set; }
+  public string? PublicationType { get; set; }
   public string? Publisher { get; set; }
 
   [XmlElement(IsNullable = true)]

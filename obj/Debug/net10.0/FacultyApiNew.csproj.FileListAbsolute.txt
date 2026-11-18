@@ -79,3 +79,4 @@ C:\Users\yangd\FacultyApiNew\obj\Debug\net10.0\refint\FacultyApiNew.dll
 C:\Users\yangd\FacultyApiNew\obj\Debug\net10.0\FacultyApiNew.pdb
 C:\Users\yangd\FacultyApiNew\obj\Debug\net10.0\FacultyApiNew.genruntimeconfig.cache
 C:\Users\yangd\FacultyApiNew\obj\Debug\net10.0\ref\FacultyApiNew.dll
+C:\Users\yangd\FacultyApiNew\obj\Debug\net10.0\FacultyApiNew.sourcelink.json

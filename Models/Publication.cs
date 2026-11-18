@@ -11,7 +11,7 @@ public class Publication
 
     public string FacultyID { get; set; } = "";
     public string Title { get; set; } = "";
-    //public string FName { get; set; } = "";
+    public string PublicationType { get; set; } = "";
     public string Publisher { get; set; } = "";
     public int? YearPublished { get; set; }
 }

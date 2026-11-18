@@ -25,12 +25,14 @@ public class FacultyController : ControllerBase
                 FacultyID = f.FacultyID,
                 FName = f.FName,
                 LName = f.LName,
-                Division = f.Division,
+                Position = f.Position,
+              Division = f.Division,
                 Publications = f.Publications.Select(p => new PublicationDto
                 {
                     PublicationsID = p.PublicationsID,
                     Title = p.Title,
                     Publisher = p.Publisher,
+                    PublicationType = p.PublicationType,
                     YearPublished = p.YearPublished
                 }).ToList()
             })
@@ -49,6 +51,7 @@ public class FacultyController : ControllerBase
 
     faculty.FName = dto.FName;
     faculty.LName = dto.LName;
+    faculty.Position = dto.Position;
     faculty.Division = dto.Division;
 
     await _db.SaveChangesAsync();
@@ -91,6 +94,7 @@ public class FacultyController : ControllerBase
 
     publication.Title = dto.Title;
     publication.Publisher = dto.Publisher;
+    publication.PublicationType = dto.PublicationType;
     publication.YearPublished = dto.YearPublished ?? 0;
 
     await _db.SaveChangesAsync();
