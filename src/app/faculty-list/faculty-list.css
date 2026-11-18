@@ -1,0 +1,269 @@
+/* ---------- tokens ---------- */
+:host {
+  --bg: #fdf4f9;
+  --surface: #ffffff;
+  --surface-alt: #fdeaf3;
+  --border: #f4d8e6;
+  --border-strong: #e9b6cf;
+  --text: #1f1a1d;
+  --text-muted: #7a6572;
+  --accent: #e60277;
+  --accent-hover: #bf0063;
+  --accent-soft: #ffe1ef;
+  --accent-soft-text: #a30055;
+  --select-bg: #ffe8f3;
+  --select-border: #e60277;
+  --danger: #b42318;
+  --danger-bg: #fef3f2;
+  --danger-border: #fecdca;
+  --note: #8a4b08;
+  --note-bg: #fff4e0;
+  --ring: rgba(230, 2, 119, .25);
+  --shadow: 0 1px 2px rgba(20, 24, 50, .06), 0 4px 12px rgba(20, 24, 50, .05);
+  display: block;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  border-radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    --bg: #170f15;
+    --surface: #22171f;
+    --surface-alt: #2e1c28;
+    --border: #3e2637;
+    --border-strong: #58364b;
+    --text: #f7ebf1;
+    --text-muted: #b99bac;
+    --accent: #e60277;
+    --accent-hover: #ff3d96;
+    --accent-soft: #3b1429;
+    --accent-soft-text: #ff9fcf;
+    --select-bg: #3b1429;
+    --select-border: #e60277;
+    --danger: #ff8b82;
+    --danger-bg: #3a1c1c;
+    --danger-border: #6b2a2a;
+    --note: #ffcf8a;
+    --note-bg: #3a2c15;
+    --ring: rgba(230, 2, 119, .4);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 12px rgba(0, 0, 0, .25);
+  }
+}
+
+/* ---------- edit panel ---------- */
+.edit-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: .85rem;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+  .edit-panel label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    flex: 1 1 180px;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .edit-panel input {
+    padding: .55rem .7rem;
+    font-size: .95rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+
+    .edit-panel input:focus,
+    .filter-box:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--ring);
+    }
+
+    .edit-panel input:disabled {
+      background: var(--surface-alt);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+.editing-note {
+  flex-basis: 100%;
+  font-size: .85rem;
+  color: var(--note);
+  background: var(--note-bg);
+  padding: .4rem .7rem;
+  border-radius: 8px;
+}
+
+/* ---------- buttons ---------- */
+button {
+  padding: .55rem 1rem;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .15s, opacity .15s, transform .05s;
+}
+
+  button:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+
+  button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+/* Save = first button in the panel */
+.edit-panel button:first-of-type {
+  background: var(--accent);
+  color: #fff;
+}
+
+  .edit-panel button:first-of-type:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+
+/* Cancel = second button in the panel */
+.edit-panel button:nth-of-type(2) {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+  .edit-panel button:nth-of-type(2):hover:not(:disabled) {
+    background: var(--surface-alt);
+  }
+
+/* ---------- error ---------- */
+.error {
+  margin: 0 0 1rem;
+  padding: .7rem .9rem;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+
+/* ---------- filter box ---------- */
+.filter-box {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: .7rem 1rem;
+  margin-bottom: 1rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  transition: border-color .15s, box-shadow .15s;
+}
+
+  .filter-box::placeholder {
+    color: var(--text-muted);
+  }
+
+/* ---------- rows ---------- */
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: .85rem;
+  padding: .7rem 1rem;
+  margin-bottom: .5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid transparent;
+  border-radius: 10px;
+  transition: background .15s, border-color .15s, box-shadow .15s;
+}
+
+  .row:hover {
+    background: var(--surface-alt);
+    box-shadow: var(--shadow);
+  }
+
+  .row.selected {
+    background: var(--select-bg);
+    border-color: var(--select-border);
+    border-left-color: var(--select-border);
+  }
+
+  .row .name {
+    flex: 1 1 0;
+    min-width: 0; /* lets long names shrink instead of wrapping the row */
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .row .division {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: .92rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .row .pub-link {
+    flex: 0 0 auto;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+    .row .pub-link:hover {
+      text-decoration: underline;
+    }
+
+  .row button {
+    flex: 0 0 auto;
+    padding: .35rem .85rem;
+    background: var(--accent-soft);
+    color: var(--accent-soft-text);
+    border-color: transparent;
+  }
+
+    .row button:hover:not(:disabled) {
+      background: var(--accent);
+      color: #fff;
+    }

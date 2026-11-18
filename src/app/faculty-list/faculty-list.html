@@ -1,0 +1,51 @@
+<div class="edit-panel">
+  <label>
+    First name
+    <input type="text" [(ngModel)]="draft.FName" [disabled]="!editing || saving"
+           placeholder="Click Edit on a row" />
+  </label>
+
+  <label>
+    Division
+    <input type="text" [(ngModel)]="draft.Division" [disabled]="!editing || saving"
+           placeholder="Click Edit on a row" />
+  </label>
+
+  <button type="button" (click)="save()"
+          [disabled]="!editing || saving || !draft.FName.trim()">
+    Save
+  </button>
+  <button type="button" (click)="cancel()"
+          [disabled]="!editing || saving">
+    Cancel
+  </button>
+
+  @if (editing) {
+  <span class="editing-note">Editing {{ editing.FName }} {{ editing.LName }}</span>
+  }
+</div>
+
+@if (error) {
+<p class="error">{{ error }}</p>
+}
+
+<!-- original filter box -->
+<!-- keep your existing filter input exactly as it is, e.g.: -->
+<input type="text" class="filter-box" [(ngModel)]="filterText" placeholder="Filter faculty..." />
+
+@if (faculty$ | async; as list) {
+  @for (f of filterFaculty(list); track f.FacultyID) {
+<div class="row" [class.selected]="editing?.Id === f.Id">
+  <span class="name">{{ f.FName }} {{ f.LName }}</span>
+  <span class="division">{{ f.Division }}</span>
+
+
+  <span class="name">
+    <a class="pub-link" [routerLink]="['/publications', f.FacultyID]">
+      Publications ({{ f.publications.length }})
+    </a></span>
+
+    <button type="button" (click)="startEdit(f)" [disabled]="saving">Edit</button>
+</div>
+  }
+}

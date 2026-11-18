@@ -1,0 +1,91 @@
+<div class="page">
+  <a class="back-link" routerLink="/faculty-list">← Back to faculty</a>
+
+  @if (faculty$ | async; as f) {
+  <header class="profile">
+    <h1 class="page-title">{{ f.FName }} {{ f.LName }}</h1>
+    <span class="division-badge">{{ f.Division }}</span>
+  </header>
+
+  <!-- Edit panel: shown only while a publication is being edited -->
+  @if (draft) {
+  <section class="edit-panel">
+    <h2 class="edit-heading">Edit publication</h2>
+
+    <div class="edit-grid">
+      <label class="field field-wide">
+        <span>Title</span>
+        <input type="text" [(ngModel)]="draft.Title" name="title">
+      </label>
+
+      <label class="field">
+        <span>Publisher</span>
+        <input type="text" [(ngModel)]="draft.Publisher" name="publisher">
+      </label>
+
+      <label class="field field-year">
+        <span>Year</span>
+        <input type="number" [(ngModel)]="draft.YearPublished" name="year">
+      </label>
+    </div>
+
+    @if (errorMsg) {
+    <p class="error">{{ errorMsg }}</p>
+    }
+
+    <div class="actions">
+      <button class="btn btn-primary" (click)="save()" [disabled]="saving">
+        {{ saving ? 'Saving…' : 'Save changes' }}
+      </button>
+      <button class="btn" (click)="cancelEdit()" [disabled]="saving">Cancel</button>
+    </div>
+  </section>
+  }
+
+  <h2 class="section-title">Publications ({{ f.publications.length }})</h2>
+
+  @if (f.publications.length) {
+  <div class="filter-bar">
+    <input class="filter-input"
+           type="search"
+           placeholder="Filter by title…"
+           [(ngModel)]="filterText"
+           name="filter">
+    @if (filterText) {
+    <button class="btn" (click)="filterText = ''">Clear</button>
+    }
+  </div>
+
+  @if (filterPubs(f.publications); as shown) {
+  @if (filterText) {
+  <p class="filter-count">Showing {{ shown.length }} of {{ f.publications.length }}</p>
+  }
+
+  @if (shown.length) {
+  <ul class="pub-list">
+    @for (p of shown; track p.PublicationsID) {
+    <li class="pub-card" [class.editing]="editingId === p.PublicationsID">
+      <div class="pub-title">{{ p.Title }}</div>
+      <div class="pub-meta">
+        {{ p.Publisher }}
+        @if (p.YearPublished !== null) {
+        <span class="pub-year">{{ p.YearPublished }}</span>
+        }
+      </div>
+      <div class="actions">
+        <button class="btn" (click)="startEdit(p)">Edit</button>
+      </div>
+    </li>
+    }
+  </ul>
+  } @else {
+  <p class="empty">No titles match "{{ filterText }}".</p>
+  }
+  }
+  } @else {
+  <p class="empty">No publications on record.</p>
+  }
+  } @else {
+  <p class="loading">Loading…</p>
+  }
+</div>
