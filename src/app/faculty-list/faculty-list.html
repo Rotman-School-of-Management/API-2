@@ -4,6 +4,11 @@
     <input type="text" [(ngModel)]="draft.FName" [disabled]="!editing || saving"
            placeholder="Click Edit on a row" />
   </label>
+  <label>
+    Position
+    <input [(ngModel)]="draft.Position" name="position" [disabled]="saving" />
+  </label>
+
 
   <label>
     Division
@@ -34,18 +39,30 @@
 <input type="text" class="filter-box" [(ngModel)]="filterText" placeholder="Filter faculty..." />
 
 @if (faculty$ | async; as list) {
+<div class="row header" aria-hidden="true">
+  <span class="name">Name</span>
+  <span class="position">Position</span>
+  <span class="division">Division</span>
+  <span class="name">Publications</span>
+  <span class="action-spacer">Actions </span>
+</div>
+
+
+
   @for (f of filterFaculty(list); track f.FacultyID) {
 <div class="row" [class.selected]="editing?.Id === f.Id">
   <span class="name">{{ f.FName }} {{ f.LName }}</span>
+  <span class="position">{{ f.Position }}</span>
   <span class="division">{{ f.Division }}</span>
 
 
   <span class="name">
     <a class="pub-link" [routerLink]="['/publications', f.FacultyID]">
       Publications ({{ f.publications.length }})
-    </a></span>
+    </a>
+  </span>
 
-    <button type="button" (click)="startEdit(f)" [disabled]="saving">Edit</button>
+  <button type="button" (click)="startEdit(f)" [disabled]="saving">Edit</button>
 </div>
   }
 }

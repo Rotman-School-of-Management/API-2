@@ -18,10 +18,11 @@
   --radius: 10px;
   max-width: 860px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: 1rem .75rem 2rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 10pt;
+  line-height: 1.00;
   color: var(--text-primary);
-  line-height: 1.5;
 }
 
 /* Back Navigation */
@@ -254,7 +255,7 @@
 
 .pub-title {
   grid-column: 1;
-  font-size: 1.05rem;
+  font-size: 11pt;
   font-weight: 600;
   color: var(--text-primary);
 }

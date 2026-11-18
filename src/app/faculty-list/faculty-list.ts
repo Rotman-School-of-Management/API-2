@@ -19,7 +19,7 @@ export class FacultyList {
 
   // edit panel state
   editing: FacultyItem | null = null;
-  draft = { FName: '', Division: '' };
+  draft = { FName: '', Position: '', Division: '' };
   saving = false;
   error = '';
 
@@ -28,21 +28,21 @@ export class FacultyList {
     if (!words.length) return list;
 
     return list.filter(f => {
-      const haystack = `${f.FName ?? ''} ${f.LName ?? ''} ${f.Division ?? ''}`.toLowerCase();
+      const haystack = `${f.FName ?? ''} ${f.LName ?? ''} ${f.Position ?? ''} ${f.Division ?? ''}`.toLowerCase();
       return words.every(w => haystack.includes(w));
     });
   }
 
   startEdit(f: FacultyItem) {
     this.editing = f;
-    this.draft = { FName: f.FName, Division: f.Division };
+    this.draft = { FName: f.FName, Position: f.Position, Division: f.Division };
     this.error = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });   // panel is at the top of the page
   }
 
   cancel() {
     this.editing = null;
-    this.draft = { FName: '', Division: '' };
+    this.draft = { FName: '', Position: '', Division: '' };
     this.error = '';
   }
 
@@ -55,6 +55,7 @@ export class FacultyList {
       Id: this.editing.Id,
       FName: this.draft.FName.trim(),
       LName: this.editing.LName,
+      Position: this.draft.Position.trim(),
       Division: this.draft.Division.trim()
     }).subscribe({
       next: () => {

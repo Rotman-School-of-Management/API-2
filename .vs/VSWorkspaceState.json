@@ -2,10 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app",
-    "\\src\\app\\faculty-list",
-    "\\src\\app\\publication"
+    "\\src\\app"
   ],
-  "SelectedNode": "\\src\\app\\publication\\publication.css",
+  "SelectedNode": "\\src\\app\\models.ts",
   "PreviewInSolutionExplorer": false
 }

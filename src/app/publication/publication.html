@@ -19,6 +19,11 @@
       </label>
 
       <label class="field">
+        <span>PublicationType</span>
+        <input type="text" [(ngModel)]="draft.PublicationType" name="publicationType">
+      </label>
+
+      <label class="field">
         <span>Publisher</span>
         <input type="text" [(ngModel)]="draft.Publisher" name="publisher">
       </label>
@@ -66,6 +71,7 @@
     @for (p of shown; track p.PublicationsID) {
     <li class="pub-card" [class.editing]="editingId === p.PublicationsID">
       <div class="pub-title">{{ p.Title }}</div>
+      <div class="pub-meta">{{ p.PublicationType }}</div>
       <div class="pub-meta">
         {{ p.Publisher }}
         @if (p.YearPublished !== null) {

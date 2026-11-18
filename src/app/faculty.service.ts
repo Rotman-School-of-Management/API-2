@@ -28,11 +28,12 @@ export class FacultyService {
     return this.faculty$.pipe(map(list => list.find(f => f.FacultyID === FacultyID)));
   }
 
-  updateFaculty(f: { Id: number; FName: string; LName: string; Division: string }) {
+  updateFaculty(f: { Id: number; FName: string; LName: string; Position: string; Division: string }) {
     const xml =
       `<Faculty>` +
       `<FName>${this.esc(f.FName)}</FName>` +
       `<LName>${this.esc(f.LName)}</LName>` +
+      `<Position>${this.esc(f.Position)}</Position>` +
       `<Division>${this.esc(f.Division)}</Division>` +
       `</Faculty>`;
 
@@ -52,6 +53,7 @@ export class FacultyService {
     const xml =
       `<Publication>` +
       `<Title>${this.esc(p.Title ?? '')}</Title>` +
+      `<PublicationType>${this.esc(p.PublicationType ?? '')}</PublicationType>` +
       `<Publisher>${this.esc(p.Publisher ?? '')}</Publisher>` +
       year +
       `</Publication>`;
@@ -90,6 +92,7 @@ export class FacultyService {
           PublicationsID: Number(this.text(p, 'PublicationsID')),
           FacultyID,
           Title: this.text(p, 'Title'),
+          PublicationType: this.text(p, 'PublicationType'),
           Publisher: this.text(p, 'Publisher'),
           YearPublished: year ? Number(year) : null
         };
@@ -100,6 +103,7 @@ export class FacultyService {
         FacultyID,
         FName: this.text(f, 'FName'),
         LName: this.text(f, 'LName'),
+        Position: this.text(f, 'Position'),
         Division: this.text(f, 'Division'),
         publications
       };
